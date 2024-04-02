@@ -3,6 +3,7 @@
 #include <mutex>
 #include <vector>
 #include <iomanip>
+#include <chrono>
 
 using namespace std;
 
@@ -11,12 +12,15 @@ int sum = 0;
 
 void AddNumbers(const vector<int> &nums, int start, int end, int index)
 {
-    lock_guard<mutex> lock(mtx);
+    int local_sum = 0;
 
     for (int j = start; j < end; ++j)
     {
-        sum += nums[j];
+        local_sum += nums[j];
     }
+
+    lock_guard<mutex> lock(mtx);
+    sum += local_sum;
 
     cout << "Thread: " << setw(3) << index
          << "| start: " << setw(12) << start
@@ -51,6 +55,8 @@ int main()
     int thread_chunk = num_count / thread_count;
     int remainder = num_count % thread_count;
 
+    auto start_time = chrono::high_resolution_clock::now();
+
     for (int i = 0; i < thread_count; ++i)
     {
         int start = i * thread_chunk + (i < remainder ? i : remainder);
@@ -64,7 +70,11 @@ int main()
         threads[i].join();
     }
 
-    cout << "Sum: " << sum << endl;
+    auto end_time = chrono::high_resolution_clock::now();
+    chrono::duration<double> elapsed = end_time - start_time;
+
+    cout << "sum: " << sum << endl;
+    cout << "time: " << elapsed.count() << "s" << endl;
 
     return 0;
 }

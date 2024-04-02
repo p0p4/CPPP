@@ -17,7 +17,7 @@ public:
     void perform() override
     {
         double x = 0;
-        for (int i = 0; i < 5000000; ++i)
+        for (int i = 0; i < 50'000'000; ++i)
         {
             x += sin(i * 0.001);
         }
@@ -40,7 +40,9 @@ int main()
         tasks.emplace_back(new Task());
     }
 
-    for (int num_threads = 1; num_threads <= thread::hardware_concurrency(); ++num_threads)
+    int hardware_concurrency = thread::hardware_concurrency();
+
+    for (int num_threads = 1; num_threads <= hardware_concurrency; ++num_threads)
     {
         auto start_time = chrono::high_resolution_clock::now();
 
