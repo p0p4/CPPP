@@ -41,7 +41,7 @@ public:
         double x = 0;
         for (int i = 0; i < 500'000'000; ++i)
         {
-            x += sin(i * 0.001);
+            x += sqrt(i * 0.001);
         }
 
         {
