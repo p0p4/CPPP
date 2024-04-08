@@ -10,7 +10,7 @@ using namespace std;
 mutex mtx;
 int sum = 0;
 
-void AddNumbers(const vector<int> &nums, int start, int end, int index)
+void AddNumbers(const vector<int>& nums, int start, int end, int index)
 {
     int local_sum = 0;
 
@@ -23,10 +23,10 @@ void AddNumbers(const vector<int> &nums, int start, int end, int index)
     sum += local_sum;
 
     cout << "Thread: " << setw(3) << index
-         << "| start: " << setw(12) << start
-         << "| end: " << setw(12) << (end - 1)
-         << "| iterations: " << setw(12) << (end - start)
-         << "| sum: " << setw(12) << sum << endl;
+        << "| start: " << setw(12) << start
+        << "| end: " << setw(12) << (end - 1)
+        << "| iterations: " << setw(12) << (end - start)
+        << "| sum: " << setw(12) << sum << endl;
 }
 
 int main()

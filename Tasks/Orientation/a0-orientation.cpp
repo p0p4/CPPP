@@ -8,8 +8,8 @@ using namespace std;
 
 struct string_elem_t
 {
-    const char *str_;
-    string_elem_t *next_;
+    const char* str_;
+    string_elem_t* next_;
 };
 
 // // C version
@@ -47,9 +47,16 @@ struct string_elem_t
 
 int main()
 {
-    // int n = 0;
+    int books_amount = 5;
+    static int s_books_amount = 5;
+    const int k_books_amount = 5;
+    int* p_books_amount = &s_books_amount;
 
-    // int *p_n = &n;
+
+
+    int n = 0;
+
+    int* p_n = &n;
 
     // const char *hamlet = "Hamlet";
 
@@ -57,11 +64,11 @@ int main()
     // cout << "&hamlet = " << &hamlet << endl;
     // cout << "(void *)hamlet = " << (void *)hamlet << endl;
 
-    // cout << "n = " << n << endl;
-    // cout << "&n = " << &n << endl;
-    // cout << "p_n = " << p_n << endl;
-    // cout << "*p_n = " << *p_n << endl;
-    // cout << "&p_n = " << &p_n << endl;
+    cout << "n = " << n << endl;
+    cout << "&n = " << &n << endl;
+    cout << "p_n = " << p_n << endl;
+    cout << "*p_n = " << *p_n << endl;
+    cout << "&p_n = " << &p_n << endl;
 
     // forward_list<string> books = {"Hamlet", "Macbeth", "Hamlet", "Romeo and Juliet", "Hamlet"};
 
@@ -69,19 +76,19 @@ int main()
 
     // cout << "n = " << n << endl;
 
-    std::shared_ptr<int> ptr1 = std::make_shared<int>(42);
-    std::shared_ptr<int> ptr2 = ptr1; // Shared ownership
+    // std::shared_ptr<int> ptr1 = std::make_shared<int>(42);
+    // std::shared_ptr<int> ptr2 = ptr1; // Shared ownership
 
     // weak reference
-    std::weak_ptr<int> weak1 = ptr1;
+    // std::weak_ptr<int> weak1 = ptr1;
 
-    cout << "ptr1 = " << ptr1 << endl;
-    cout << "ptr2 = " << ptr2 << endl;
-    cout << "weak1 = " << weak1.lock() << endl;
+    // cout << "ptr1 = " << ptr1 << endl;
+    // cout << "ptr2 = " << ptr2 << endl;
+    // cout << "weak1 = " << weak1.lock() << endl;
 
-    cout << ptr1.use_count() << endl;  // Outputs: 2
-    cout << ptr2.use_count() << endl;  // Outputs: 2
-    cout << weak1.use_count() << endl; // Outputs: 2
+    // cout << ptr1.use_count() << endl;  // Outputs: 2
+    // cout << ptr2.use_count() << endl;  // Outputs: 2
+    // cout << weak1.use_count() << endl; // Outputs: 2
 
     return 0;
 }

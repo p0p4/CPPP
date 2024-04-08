@@ -1,15 +1,15 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-#include <execution>
 #include <chrono>
 #include <numeric>
+#include <execution>
 
 using namespace std;
 
 int main()
 {
-    const int N = 10000000;
+    const int N = 10'000'000;
     vector<int> numbers(N);
 
     auto increment = [](int &n)
@@ -56,4 +56,4 @@ std::execution::par         |   suoittaa operaation rinnakkain.
 std::execution::par_unseq   |   suorittaa operaation rinnakkain ja sallii myös vektorisaation.
 */
 
-// cd "/Users/tino/Library/Mobile Documents/com~apple~CloudDocs/School/Metropolia/Courses/CPPP/Tasks/Task02/" && clang++ -std=c++20 -fexperimental-library teht5.cpp -o teht5 && "/Users/tino/Library/Mobile Documents/com~apple~CloudDocs/School/Metropolia/Courses/CPPP/Tasks/Task02/"teht5
+// cd "/Users/tino/Library/Mobile Documents/com~apple~CloudDocs/School/Metropolia/Courses/CPPP/Tasks/Task02/" && clang++ -std=c++23 -fexperimental-library teht5.cpp -o teht5 && "/Users/tino/Library/Mobile Documents/com~apple~CloudDocs/School/Metropolia/Courses/CPPP/Tasks/Task02/"teht5

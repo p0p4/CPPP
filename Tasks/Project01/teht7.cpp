@@ -126,9 +126,9 @@ private:
 
 int main()
 {
-    TaskQueue task_queue(3);
+    TaskQueue task_queue(thread::hardware_concurrency());
 
-    for (int i = 0; i < 10; ++i)
+    for (int i = 0; i < 17; ++i)
     {
         GameTask *task = new Task(i);
         task_queue.addJob(task);
@@ -143,3 +143,6 @@ suoritettavaksi, eikä mennä suoraan odottamaan ehtomuuttujan signaalia. Huomaa
 
 A: Jottei säie tuhlaa aikaa odottamalla ehtomuuttujan signaalia, jos jonossa on jo työtä suoritettavaksi.
 */
+
+// notes to self:
+// checkout semaphore
