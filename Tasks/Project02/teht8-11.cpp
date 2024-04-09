@@ -1,11 +1,16 @@
 #include <iostream>
+#include <fstream>
+#include <sstream>
+#include <mutex>
 
 using std::cout;
 using std::endl;
 
 std::mutex mtx;
+std::ofstream log_file;
 
 std::string Timestamp();
+void WriteToLog(const std::string& message);
 
 template <typename T>
 class LogPointer
@@ -13,15 +18,16 @@ class LogPointer
 private:
     T* _i_;
     int* _ref_count_;
+    std::stringstream pointer_string;
 
 public:
     LogPointer(T* i) : _i_(i)
     {
         _ref_count_ = new int(1);
 
-        cout << Timestamp() << "| " << _i_ << " owner created" << endl;
-        cout << Timestamp() << "| " << _i_ << " " << *_ref_count_ << " owner(s)" << endl;
-        cout << endl;
+        pointer_string << _i_;
+        WriteToLog(pointer_string.str() + " owner created");
+        WriteToLog(pointer_string.str() + " " + std::to_string(*_ref_count_) + " owner(s)");
     }
 
     LogPointer(const LogPointer& other)
@@ -32,9 +38,10 @@ public:
         _ref_count_ = other._ref_count_;
         ++(*_ref_count_);
 
-        cout << Timestamp() << "| " << _i_ << " owner created" << endl;
-        cout << Timestamp() << "| " << _i_ << " " << *_ref_count_ << " owner(s)" << endl;
-        cout << endl;
+        pointer_string << _i_;
+        WriteToLog(pointer_string.str() + " owner created");
+        WriteToLog(pointer_string.str() + " " + std::to_string(*_ref_count_) + " owner(s)");
+
     }
 
     ~LogPointer()
@@ -46,9 +53,8 @@ public:
             delete _i_;
             delete _ref_count_;
         }
-        cout << Timestamp() << "| " << _i_ << " owner destroyed" << endl;
-        cout << Timestamp() << "| " << _i_ << " " << *_ref_count_ << " owner(s)" << endl;
-        cout << endl;
+        WriteToLog(pointer_string.str() + " owner destroyed");
+        WriteToLog(pointer_string.str() + " " + std::to_string(*_ref_count_) + " owner(s)");
     }
 
     LogPointer& operator=(const LogPointer& other)
@@ -62,31 +68,33 @@ public:
                 delete _i_;
                 delete _ref_count_;
 
-                cout << Timestamp() << "| " << _i_ << " owner unassigned" << endl;
-                cout << Timestamp() << "| " << _i_ << " " << (*_ref_count_) << " owner(s)" << endl;
+                WriteToLog(pointer_string.str() + " owner unassigned");
+                WriteToLog(pointer_string.str() + " " + std::to_string(*_ref_count_) + " owner(s)");
             }
-            cout << Timestamp() << "| " << _i_ << " = " << other._i_ << endl;
+            WriteToLog(pointer_string.str() + " = " + other.pointer_string.str());
+
+            pointer_string.str("");
+            pointer_string << other._i_;
 
             _i_ = other._i_;
             _ref_count_ = other._ref_count_;
             ++(*_ref_count_);
 
-            cout << Timestamp() << "| " << _i_ << " new owner assigned" << endl;
-            cout << Timestamp() << "| " << _i_ << " " << *_ref_count_ << " owner(s)" << endl;
-            cout << endl;
+            WriteToLog(pointer_string.str() + " new owner assigned");
+            WriteToLog(pointer_string.str() + " " + std::to_string(*_ref_count_) + " owner(s)");
         }
         return *this;
     }
 
     T* operator->()
     {
-        cout << Timestamp() << "| " << _i_ << " operator->" << endl;
+        WriteToLog(pointer_string.str() + " operator->");
         return _i_;
     }
 
     T& operator*()
     {
-        cout << Timestamp() << "| " << _i_ << " operator*" << endl;
+        WriteToLog(pointer_string.str() + " operator*");
         return *_i_;
     }
 };
@@ -95,27 +103,28 @@ class Test
 {
 private:
     int x;
+    std::stringstream pointer_string;
 
 public:
     Test(int x) : x(x)
     {
-        cout << Timestamp() << "| " << this << " Test" << x << "()" << " created" << endl;
+        pointer_string << this;
+        WriteToLog(pointer_string.str() + " Test" + std::to_string(x) + "() created");
     }
     ~Test()
     {
-        cout << Timestamp() << "| " << this << " ~Test" << x << "()" << " destroyed" << endl;
+        WriteToLog(pointer_string.str() + " ~Test" + std::to_string(x) + "() destroyed");
     }
 
     void someFunction()
     {
-        cout << Timestamp() << "| " << this << " Test" << x << "::someFunction()" << endl;
-        cout << endl;
+        WriteToLog(pointer_string.str() + " Test" + std::to_string(x) + "::someFunction()");
     }
 };
 
 int main()
 {
-    cout << Timestamp() << "| {\n\n";
+    WriteToLog("{");
 
     // Create an object on the heap and pointer to it on the stack
     Test* _test1 = new Test(1);
@@ -124,7 +133,7 @@ int main()
     LogPointer<Test> test_pointer1(_test1);
 
     {
-        cout << Timestamp() << "|   {\n\n";
+        WriteToLog("  {");
 
         // Create a LogPointer to manage the given object on the heap
         LogPointer<Test> test_pointer2(new Test(2));
@@ -135,7 +144,7 @@ int main()
         // Assign a pointer to another pointer
         test_pointer2 = test_pointer1;
 
-        cout << Timestamp() << "|   }\n\n";
+        WriteToLog("  }");
     }
 
     // Copy the pointer to another pointer in its creation
@@ -144,9 +153,17 @@ int main()
     // Call a function of the object using the pointer and -> operator
     test_pointer3->someFunction();
 
-    cout << Timestamp() << "| }\n\n";
+    WriteToLog("}");
 
     return 0;
+}
+
+void WriteToLog(const std::string& message)
+{
+    log_file.open("log.txt", std::ios_base::app);
+    log_file << Timestamp() << "| " << message << std::endl;
+    log_file.close();
+    cout << Timestamp() << "| " << message << " " << std::endl;
 }
 
 std::string Timestamp()
