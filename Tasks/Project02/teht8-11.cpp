@@ -7,7 +7,6 @@ using std::cout;
 using std::endl;
 
 std::mutex mtx;
-std::ofstream log_file;
 
 std::string Timestamp();
 void WriteToLog(const std::string& message);
@@ -160,9 +159,12 @@ int main()
 
 void WriteToLog(const std::string& message)
 {
+    static std::ofstream log_file;
+
     log_file.open("log.txt", std::ios_base::app);
     log_file << Timestamp() << "| " << message << std::endl;
     log_file.close();
+
     cout << Timestamp() << "| " << message << " " << std::endl;
 }
 
@@ -173,10 +175,14 @@ std::string Timestamp()
     auto epoch = now_ms.time_since_epoch();
     auto value = std::chrono::duration_cast<std::chrono::microseconds>(epoch);
     auto ms = value.count() % 1000000;
+
     time_t tt = std::chrono::system_clock::to_time_t(now);
     tm local_tm = *localtime(&tt);
+
     char buffer[32];
+
     strftime(buffer, 32, "%H:%M:%S", &local_tm);
     snprintf(buffer, 32, "%s.%06lld", buffer, ms);
+
     return std::string(buffer);
 }
