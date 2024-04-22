@@ -4,7 +4,19 @@ int main()
 {
     try
     {
-        int* array = new int[10000000000000];
+        double size = 10'000'000'000'000;
+
+        std::cout << "Trying to allocate " << size * sizeof(int) << " bytes of memory" << std::endl;
+
+        int* array = new int[size];
+
+        std::cout << "Allocated" << std::endl;
+
+        for (int i = 0; i < size; i++)
+        {
+            array[i] = i;
+        }
+        std::cout << "Filled" << std::endl;
 
         delete[] array;
     }
