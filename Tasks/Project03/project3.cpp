@@ -169,3 +169,5 @@ int is_quadsorfullhouse(int* hand)
 
     return 0;
 }
+
+//sdl

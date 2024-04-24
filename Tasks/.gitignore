@@ -1,8 +1,16 @@
 *
+!/
+!/*/
+!/*/*/
+!/*/*/*/
+!/*/*/*/*/
 
 !.gitignore
-!/*
 !/*/*.cpp
 !*.pdf
 !*.docx
-.DS_Store
+!*.h
+!*.cmake
+!*.pc
+!*.a
+!*.dylib
