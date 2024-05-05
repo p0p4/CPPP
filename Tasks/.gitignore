@@ -7,10 +7,13 @@
 
 !.gitignore
 !/*/*.cpp
+!/*/*/*.cpp
+!/*/*/*.hpp
 !*.pdf
 !*.docx
-!*.h
 !*.cmake
 !*.pc
 !*.a
 !*.dylib
+!*.txt
+!*.png

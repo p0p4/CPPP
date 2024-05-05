@@ -1,0 +1,1 @@
+Huomasin itse, että taulukkoon oli annettu tyypiksi int mutta myöhemmin varattu char tyyppejä. Myös, että string.h on turhaan käytössä.

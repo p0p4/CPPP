@@ -1,0 +1,24 @@
+Process:         leaks [3271]
+Path:            /Users/USER/Library/Mobile Documents/com~apple~CloudDocs/*/leaks
+Load Address:    0x104d54000
+Identifier:      leaks
+Version:         0
+Code Type:       ARM64
+Platform:        macOS
+Parent Process:  leaks [3270]
+
+Date/Time:       2024-05-05 21:43:27.111 +0300
+Launch Time:     2024-05-05 21:43:18.750 +0300
+OS Version:      macOS 14.4.1 (23E224)
+Report Version:  7
+Analysis Tool:   /Applications/Xcode.app/Contents/Developer/usr/bin/leaks
+Analysis Tool Version:  Xcode 15.3 (15E204a)
+
+Physical footprint:         128.8M
+Physical footprint (peak):  186.0M
+Idle exit:                  untracked
+----
+
+leaks Report Version: 4.0, multi-line stacks
+Process 3271: 7483934 nodes malloced for 116952 KB
+Process 3271: 7483745 leaks for 119739920 total leaked bytes.

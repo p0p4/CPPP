@@ -1,0 +1,128 @@
+[1mshakki/main.cpp:1:0: [31minformation:[39m Include file: <fcntl.h> not found. Please note: Cppcheck does not need standard library headers to get proper results. [missingIncludeSystem][0m
+#include <fcntl.h>
+^
+[1mshakki/main.cpp:3:0: [31minformation:[39m Include file: <iostream> not found. Please note: Cppcheck does not need standard library headers to get proper results. [missingIncludeSystem][0m
+#include <iostream>
+^
+[1mshakki/main.cpp:4:0: [31minformation:[39m Include file: <string> not found. Please note: Cppcheck does not need standard library headers to get proper results. [missingIncludeSystem][0m
+#include <string>
+^
+[1mshakki/asema.h:3:0: [31minformation:[39m Include file: <list> not found. Please note: Cppcheck does not need standard library headers to get proper results. [missingIncludeSystem][0m
+#include <list>
+^
+[1mshakki/asema.h:4:0: [31minformation:[39m Include file: <string> not found. Please note: Cppcheck does not need standard library headers to get proper results. [missingIncludeSystem][0m
+#include <string>
+^
+[1mshakki/nappula.h:3:0: [31minformation:[39m Include file: <list> not found. Please note: Cppcheck does not need standard library headers to get proper results. [missingIncludeSystem][0m
+#include <list>
+^
+[1mshakki/nappula.h:4:0: [31minformation:[39m Include file: <string> not found. Please note: Cppcheck does not need standard library headers to get proper results. [missingIncludeSystem][0m
+#include <string>
+^
+[1mshakki/peli.h:8:2: [31mstyle:[39m Class 'Peli' has a constructor with 1 argument that is not explicit. [noExplicitConstructor][0m
+ Peli(int);
+ ^
+[1mshakki/kayttoliittyma.h:24:2: [31mstyle:[39m Class 'Kayttoliittyma' has a constructor with 1 argument that is not explicit. [noExplicitConstructor][0m
+ Kayttoliittyma(Asema *asema) { this->_asema = asema; }
+ ^
+[1mshakki/nappula.h:59:7: [31mstyle:[39m The function 'annaSiirrot' overrides a function in a base class but is not marked with a 'override' specifier. [missingOverride][0m
+ void annaSiirrot(std::list<Siirto> &lista, Ruutu *, Asema *, int vari);
+      ^
+[1mshakki/nappula.h:40:15: [2mnote:[0m Virtual function in base class
+ virtual void annaSiirrot(std::list<Siirto> &lista, Ruutu *, Asema *, int vari) = 0;
+              ^
+[1mshakki/nappula.h:59:7: [2mnote:[0m Function in derived class
+ void annaSiirrot(std::list<Siirto> &lista, Ruutu *, Asema *, int vari);
+      ^
+[1mshakki/nappula.h:67:7: [31mstyle:[39m The function 'annaSiirrot' overrides a function in a base class but is not marked with a 'override' specifier. [missingOverride][0m
+ void annaSiirrot(std::list<Siirto> &lista, Ruutu *, Asema *, int vari);
+      ^
+[1mshakki/nappula.h:40:15: [2mnote:[0m Virtual function in base class
+ virtual void annaSiirrot(std::list<Siirto> &lista, Ruutu *, Asema *, int vari) = 0;
+              ^
+[1mshakki/nappula.h:67:7: [2mnote:[0m Function in derived class
+ void annaSiirrot(std::list<Siirto> &lista, Ruutu *, Asema *, int vari);
+      ^
+[1mshakki/nappula.h:76:7: [31mstyle:[39m The function 'annaSiirrot' overrides a function in a base class but is not marked with a 'override' specifier. [missingOverride][0m
+ void annaSiirrot(std::list<Siirto> &lista, Ruutu *, Asema *, int vari);
+      ^
+[1mshakki/nappula.h:40:15: [2mnote:[0m Virtual function in base class
+ virtual void annaSiirrot(std::list<Siirto> &lista, Ruutu *, Asema *, int vari) = 0;
+              ^
+[1mshakki/nappula.h:76:7: [2mnote:[0m Function in derived class
+ void annaSiirrot(std::list<Siirto> &lista, Ruutu *, Asema *, int vari);
+      ^
+[1mshakki/nappula.h:84:7: [31mstyle:[39m The function 'annaSiirrot' overrides a function in a base class but is not marked with a 'override' specifier. [missingOverride][0m
+ void annaSiirrot(std::list<Siirto> &lista, Ruutu *, Asema *, int vari);
+      ^
+[1mshakki/nappula.h:76:7: [2mnote:[0m Virtual function in base class
+ void annaSiirrot(std::list<Siirto> &lista, Ruutu *, Asema *, int vari);
+      ^
+[1mshakki/nappula.h:84:7: [2mnote:[0m Function in derived class
+ void annaSiirrot(std::list<Siirto> &lista, Ruutu *, Asema *, int vari);
+      ^
+[1mshakki/nappula.h:92:7: [31mstyle:[39m The function 'annaSiirrot' overrides a function in a base class but is not marked with a 'override' specifier. [missingOverride][0m
+ void annaSiirrot(std::list<Siirto> &lista, Ruutu *, Asema *, int vari);
+      ^
+[1mshakki/nappula.h:40:15: [2mnote:[0m Virtual function in base class
+ virtual void annaSiirrot(std::list<Siirto> &lista, Ruutu *, Asema *, int vari) = 0;
+              ^
+[1mshakki/nappula.h:92:7: [2mnote:[0m Function in derived class
+ void annaSiirrot(std::list<Siirto> &lista, Ruutu *, Asema *, int vari);
+      ^
+[1mshakki/nappula.h:100:7: [31mstyle:[39m The function 'annaSiirrot' overrides a function in a base class but is not marked with a 'override' specifier. [missingOverride][0m
+ void annaSiirrot(std::list<Siirto> &lista, Ruutu *, Asema *, int vari);
+      ^
+[1mshakki/nappula.h:40:15: [2mnote:[0m Virtual function in base class
+ virtual void annaSiirrot(std::list<Siirto> &lista, Ruutu *, Asema *, int vari) = 0;
+              ^
+[1mshakki/nappula.h:100:7: [2mnote:[0m Function in derived class
+ void annaSiirrot(std::list<Siirto> &lista, Ruutu *, Asema *, int vari);
+      ^
+[1mshakki/nappula.h:43:15: [31mperformance:[39m Function 'getUnicode()' should return member '_unicode' by const reference. [returnByReference][0m
+ std::wstring getUnicode() { return _unicode; }
+              ^
+[1mshakki/nappula.h:42:31: [31mperformance:[39m Function parameter 'unicode' should be passed by const reference. [passedByValue][0m
+ void setUnicode(std::wstring unicode) { _unicode = unicode; }
+                              ^
+[1mshakki/nappula.h:58:21: [31mperformance:[39m Function parameter 'unicode' should be passed by const reference. [passedByValue][0m
+ Torni(std::wstring unicode, int vari, int koodi) : Nappula(unicode, vari, koodi) {}
+                    ^
+[1mshakki/nappula.h:66:21: [31mperformance:[39m Function parameter 'unicode' should be passed by const reference. [passedByValue][0m
+ Ratsu(std::wstring unicode, int vari, int koodi) : Nappula(unicode, vari, koodi) {}
+                    ^
+[1mshakki/nappula.h:75:23: [31mperformance:[39m Function parameter 'unicode' should be passed by const reference. [passedByValue][0m
+ Lahetti(std::wstring unicode, int vari, int koodi) : Nappula(unicode, vari, koodi) {}
+                      ^
+[1mshakki/nappula.h:83:21: [31mperformance:[39m Function parameter 'unicode' should be passed by const reference. [passedByValue][0m
+ Daami(std::wstring unicode, int vari, int koodi) : Nappula(unicode, vari, koodi), Lahetti(unicode, vari, koodi), Torni(unicode, vari, koodi) {}
+                    ^
+[1mshakki/nappula.h:91:24: [31mperformance:[39m Function parameter 'unicode' should be passed by const reference. [passedByValue][0m
+ Kuningas(std::wstring unicode, int vari, int koodi) : Nappula(unicode, vari, koodi) {}
+                       ^
+[1mshakki/nappula.h:99:23: [31mperformance:[39m Function parameter 'unicode' should be passed by const reference. [passedByValue][0m
+ Sotilas(std::wstring unicode, int vari, int koodi) : Nappula(unicode, vari, koodi) {}
+                      ^
+[1mshakki/main.cpp:39:13: [31mstyle:[39m Unused variable: o [unusedVariable][0m
+        int o;
+            ^
+[1mshakki/nappula.h:42:0: [31mstyle:[39m The function 'setUnicode' is never used. [unusedFunction][0m
+ void setUnicode(std::wstring unicode) { _unicode = unicode; }
+^
+[1mshakki/nappula.h:43:0: [31mstyle:[39m The function 'getUnicode' is never used. [unusedFunction][0m
+ std::wstring getUnicode() { return _unicode; }
+^
+[1mshakki/nappula.h:44:0: [31mstyle:[39m The function 'setVari' is never used. [unusedFunction][0m
+ void setVari(int vari) { _vari = vari; }
+^
+[1mshakki/nappula.h:45:0: [31mstyle:[39m The function 'getVari' is never used. [unusedFunction][0m
+ int getVari() { return _vari; }
+^
+[1mshakki/nappula.h:46:0: [31mstyle:[39m The function 'getKoodi' is never used. [unusedFunction][0m
+ int getKoodi() { return _koodi; }
+^
+[1mshakki/nappula.h:47:0: [31mstyle:[39m The function 'setKoodi' is never used. [unusedFunction][0m
+ void setKoodi(int koodi) { _koodi = koodi; }
+^
+[1mnofile:0:0: [31minformation:[39m Active checkers: 163/712 (use --checkers-report=<filename> to see details) [checkersReport][0m
+
