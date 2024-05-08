@@ -1,8 +1,8 @@
-#include <iostream>
 #include <cstring>
 #include <forward_list>
-#include <set>
+#include <iostream>
 #include <memory>
+#include <set>
 
 using namespace std;
 
@@ -45,6 +45,13 @@ struct string_elem_t
 //     return count(books.begin(), books.end(), "Hamlet");
 // }
 
+void swap(int*& a, int*& b)
+{
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
 int main()
 {
     int books_amount = 5;
@@ -52,7 +59,10 @@ int main()
     const int k_books_amount = 5;
     int* p_books_amount = &s_books_amount;
 
-
+    int* a = new int(5);
+    int* b = new int(10);
+    swap(a, b);
+    std::cout << "a = " << *a << ", b = " << *b << std::endl;
 
     int n = 0;
 
