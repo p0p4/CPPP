@@ -1,11 +1,13 @@
-// #include <boost/asio.hpp>
+#include <boost/asio.hpp>
 #include <iostream>
 #include <map>
+#include <memory>
 #include <mutex>
 #include <string>
 #include <thread>
+#include <vector>
 
-#include "boost/asio.hpp"
+// #include "boost/asio.hpp"
 
 #define BOLDWHITE "\033[1m\033[37m"
 #define RESET "\033[0m"
@@ -15,7 +17,7 @@ using std::cout;
 using std::endl;
 using std::string;
 
-std::map<string, tcp::socket*> clients;
+std::map<string, std::unique_ptr<tcp::socket>> clients;
 std::mutex mtx;
 int client_count = 0;
 
@@ -27,7 +29,7 @@ void handle_disconnect(const string&);
 enum broadcast_type
 {
     Message,
-    Announcement,
+    Announcement
 };
 
 /**
@@ -78,7 +80,7 @@ void broadcast(const string& data, const string& sender, broadcast_type broadcas
  *
  * @param socket The client socket
  */
-void handle_client(tcp::socket* socket)
+void handle_client(std::unique_ptr<tcp::socket> socket)
 {
     string client_name;
     try
@@ -113,7 +115,7 @@ void handle_client(tcp::socket* socket)
         {
             std::lock_guard<std::mutex> guard(mtx);
             client_count++;
-            clients[client_name] = socket;
+            clients[client_name] = std::move(socket);
         }
 
         broadcast(client_name + " joined, ONLINE: " + std::to_string(client_count), client_name, Announcement);
@@ -121,7 +123,7 @@ void handle_client(tcp::socket* socket)
         // Wait for messages from the client
         while (true)
         {
-            boost::asio::read_until(*socket, buffer, "\n");
+            boost::asio::read_until(*clients[client_name], buffer, "\n");
             string message;
             std::istream is(&buffer);
             std::getline(is, message);
@@ -153,13 +155,13 @@ void handle_client(tcp::socket* socket)
 void handle_disconnect(const string& client_name)
 {
     {
-        std::lock_guard<std::mutex> guard(mtx);
+        mtx.lock();
         client_count--;
+        mtx.unlock();
 
         broadcast(client_name + " left, ONLINE: " + std::to_string(client_count), client_name, Announcement);
 
-        // delete socket
-        delete clients[client_name];
+        clients[client_name]->close();
         clients.erase(client_name);
     }
 }
@@ -175,21 +177,25 @@ int main()
 {
     boost::asio::io_context io_context;
     tcp::acceptor acceptor(io_context, tcp::endpoint(tcp::v4(), 8080));
+    std::vector<std::thread> threads;
 
     while (true)
     {
         try
         {
-            tcp::socket* socket = new tcp::socket(io_context);
+            std::unique_ptr<tcp::socket> socket(new tcp::socket(io_context));
             acceptor.accept(*socket);
-            std::thread([socket]
-                        { handle_client(socket); })
-                .detach();
+            threads.emplace_back(std::thread(handle_client, std::move(socket)));
         }
         catch (std::exception& e)
         {
-            std::cerr << "main: " << e.what() << endl;
+            std::cerr << "main: " << e.what() << std::endl;
         }
+    }
+
+    for (auto& thread : threads)
+    {
+        thread.join();
     }
 
     return 0;

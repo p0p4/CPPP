@@ -1,8 +1,8 @@
-// #include <boost/asio.hpp>
+#include <boost/asio.hpp>
 #include <iostream>
 #include <thread>
 
-#include "boost/asio.hpp"
+// #include "boost/asio.hpp"
 
 #define BOLDWHITE "\033[1m\033[37m"
 #define RESET "\033[0m"
@@ -124,6 +124,7 @@ int main()
         }
 
         receive_thread.join();
+        socket.close();
     }
     catch (std::exception& e)
     {
