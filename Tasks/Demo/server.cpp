@@ -97,7 +97,7 @@ void handle_client(std::unique_ptr<tcp::socket> socket)
             // handle duplicate names
             {
                 std::lock_guard<std::mutex> guard(mtx);
-                if (clients.find(client_name) != clients.end())
+                if (clients.find(client_name) != clients.end() || client_name.empty())
                 {
                     boost::asio::write(*socket, boost::asio::buffer("invalid\n"));
                     client_name.clear();
@@ -143,7 +143,9 @@ void handle_client(std::unique_ptr<tcp::socket> socket)
     catch (std::exception& e)
     {
         std::cerr << "thread: " << e.what() << endl;
-        handle_disconnect(client_name);
+
+        if (!client_name.empty())
+            handle_disconnect(client_name);
     }
 }
 
@@ -161,6 +163,7 @@ void handle_disconnect(const string& client_name)
 
         broadcast(client_name + " left, ONLINE: " + std::to_string(client_count), client_name, Announcement);
 
+        std::lock_guard<std::mutex> guard(mtx);
         clients[client_name]->close();
         clients.erase(client_name);
     }
@@ -175,9 +178,13 @@ void handle_disconnect(const string& client_name)
  */
 int main()
 {
+    int port = 8080;
+
     boost::asio::io_context io_context;
-    tcp::acceptor acceptor(io_context, tcp::endpoint(tcp::v4(), 8080));
+    tcp::acceptor acceptor(io_context, tcp::endpoint(tcp::v4(), port));
     std::vector<std::thread> threads;
+
+    cout << "Listening on port " << port << endl;
 
     while (true)
     {

@@ -60,12 +60,15 @@ void receive_messages(tcp::socket& socket)
  */
 int main()
 {
+    string host = "127.0.0.1";
+    string port = std::to_string(8080);
+
     try
     {
         boost::asio::io_context io_context;
         tcp::resolver resolver(io_context);
 
-        auto endpoints = resolver.resolve("localhost", "8080");
+        auto endpoints = resolver.resolve(host, port);
 
         tcp::socket socket(io_context);
         boost::asio::connect(socket, endpoints);
