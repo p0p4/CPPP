@@ -190,7 +190,7 @@ int main()
     {
         try
         {
-            std::unique_ptr<tcp::socket> socket(new tcp::socket(io_context));
+            auto socket = std::make_unique<tcp::socket>(io_context);
             acceptor.accept(*socket);
             threads.emplace_back(std::thread(handle_client, std::move(socket)));
         }

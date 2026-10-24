@@ -64,9 +64,9 @@ int main()
     swap(a, b);
     std::cout << "a = " << *a << ", b = " << *b << std::endl;
 
-    int n = 0;
+    string n = "Hamlet";
 
-    int* p_n = &n;
+    string* p_n = &n;
 
     // const char *hamlet = "Hamlet";
 

@@ -1,8 +1,8 @@
 #include <iostream>
-// #include <SDL2/SDL.h>
-// #include <box2d/box2d.h>
-#include "include/box2d/box2d.h"
-#include "include/SDL2/SDL.h"
+// #include <SDL2/SDL.h> //this uses the brew installed SDL2
+// #include <box2d/box2d.h> //this uses the brew installed box2d
+#include "include/box2d/box2d.h" // local include for box2d
+#include "include/SDL2/SDL.h" // local include for SDL2
 
 const float kScale = 30;
 const float kWindow_width = 800;

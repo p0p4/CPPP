@@ -1,6 +1,6 @@
+#include <future>
 #include <iostream>
 #include <vector>
-#include <future>
 
 using namespace std;
 
@@ -17,7 +17,7 @@ public:
     void perform() override
     {
         double x = 0;
-        for (int i = 0; i < 50'000'000; ++i)
+        for (int i = 0; i < 500'000'000; ++i)
         {
             x += sqrt(i * 0.001);
         }

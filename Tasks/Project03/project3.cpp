@@ -1,8 +1,8 @@
-#include <iostream>
-#include <ctime>
 #include <algorithm>
-#include <vector>
 #include <bitset>
+#include <ctime>
+#include <iostream>
+#include <vector>
 
 int is_straight(int* hand);
 int is_quadsorfullhouse(int* hand);
@@ -15,8 +15,8 @@ int main()
     int quads_or_fullhouses = 0;
     clock_t t1, t2;
 
-    bool straight_table[1 << 15] = { false };
-    bool quads_or_fullhouse_table[1 << 15] = { false };
+    bool straight_table[1 << 15] = {false};
+    bool quads_or_fullhouse_table[1 << 15] = {false};
     // 32768 bytes = 32 kB of memory used on the stack each
 
     for (card0 = 2; card0 <= 14; ++card0)
@@ -139,7 +139,7 @@ int is_straight(int* hand)
 
 int is_quadsorfullhouse(int* hand)
 {
-    int counts[15] = { 0 };
+    int counts[15] = {0};
     for (int i = 0; i < 5; ++i)
     {
         counts[hand[i]]++;
@@ -170,4 +170,4 @@ int is_quadsorfullhouse(int* hand)
     return 0;
 }
 
-//sdl
+// sdl

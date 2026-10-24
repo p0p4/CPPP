@@ -1,8 +1,8 @@
-#include <iostream>
-#include <thread>
-#include <queue>
-#include <mutex>
 #include <condition_variable>
+#include <iostream>
+#include <mutex>
+#include <queue>
+#include <thread>
 
 using namespace std;
 
@@ -65,9 +65,8 @@ public:
     {
         for (int i = 1; i <= nof_threads; ++i)
         {
-            threads.emplace_back([this](int thread_id)
-                                 { workerThread(thread_id); },
-                                 i);
+            threads.emplace_back([this, i]
+                                 { workerThread(i); });
         }
     }
 
@@ -97,8 +96,8 @@ private:
         while (true)
         {
             unique_lock<mutex> lock(queue_mtx);
-            condition.wait(lock, [this]
-                           { return !tasks.empty() || stop; });
+            condition.wait(lock, [&]
+                           { return stop || !tasks.empty(); });
 
             if (stop && tasks.empty())
             {

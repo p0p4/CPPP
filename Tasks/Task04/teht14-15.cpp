@@ -23,6 +23,7 @@ public:
         size = other.size;
         buffer = other.buffer;
         other.buffer = nullptr;
+        other.size = 0;
     }
 
     ~BigData()
@@ -50,6 +51,7 @@ public:
             size = other.size;
             buffer = other.buffer;
             other.buffer = nullptr;
+            other.size = 0;
         }
         return *this;
     }
@@ -62,6 +64,7 @@ int main()
     a = a;
     a = b;
     BigData c(a);
+    b = std::move(c);
 
     BigData d(BigData(1024));
     BigData e(1024);

@@ -1,7 +1,7 @@
-#include <iostream>
 #include <fstream>
-#include <sstream>
+#include <iostream>
 #include <mutex>
+#include <sstream>
 
 using std::cout;
 using std::endl;
@@ -17,6 +17,8 @@ class LogPointer
 private:
     T* _i_;
     int* _ref_count_;
+
+    // just for logging purposes
     std::stringstream pointer_string;
 
 public:
@@ -31,7 +33,7 @@ public:
 
     LogPointer(const LogPointer& other)
     {
-        std::lock_guard<std::mutex> lock(mtx);
+        std::scoped_lock<std::mutex> lock(mtx);
 
         _i_ = other._i_;
         _ref_count_ = other._ref_count_;
@@ -40,12 +42,11 @@ public:
         pointer_string << _i_;
         WriteToLog(pointer_string.str() + " owner created");
         WriteToLog(pointer_string.str() + " " + std::to_string(*_ref_count_) + " owner(s)");
-
     }
 
     ~LogPointer()
     {
-        std::lock_guard<std::mutex> lock(mtx);
+        std::scoped_lock<std::mutex> lock(mtx);
 
         if (--(*_ref_count_) == 0)
         {
@@ -60,14 +61,14 @@ public:
     {
         if (this != &other)
         {
-            std::lock_guard<std::mutex> lock(mtx);
+            std::scoped_lock<std::mutex> lock(mtx);
 
             if (--(*_ref_count_) == 0)
             {
                 delete _i_;
                 delete _ref_count_;
 
-                WriteToLog(pointer_string.str() + " owner unassigned");
+                WriteToLog(pointer_string.str() + " owner destroyed");
                 WriteToLog(pointer_string.str() + " " + std::to_string(*_ref_count_) + " owner(s)");
             }
             WriteToLog(pointer_string.str() + " = " + other.pointer_string.str());
@@ -85,12 +86,14 @@ public:
         return *this;
     }
 
+    // returns the pointer to the object
     T* operator->()
     {
         WriteToLog(pointer_string.str() + " operator->");
         return _i_;
     }
 
+    // returns the object
     T& operator*()
     {
         WriteToLog(pointer_string.str() + " operator*");
@@ -102,6 +105,8 @@ class Test
 {
 private:
     int x;
+
+    // just for logging purposes
     std::stringstream pointer_string;
 
 public:
